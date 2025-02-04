@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     float health = 100;
     [SerializeField] float dps = 10;
     [SerializeField] float cure = 25;
+    [SerializeField] float point = 0;
 
 
 
@@ -26,10 +27,15 @@ public class PlayerManager : MonoBehaviour
             health = health - dps * Time.deltaTime;
             healthBar.value = health;
         }
+        if (other.gameObject.tag == "enemy"){
+            health = health - dps * Time.deltaTime;
+            healthBar.value = health;
+        }
 
         if (health <= 0){
             //Muerto morio
         }
+
     }
 
     void OnTriggerEnter(Collider other){
@@ -39,5 +45,12 @@ public class PlayerManager : MonoBehaviour
             healthBar.value = health;
             Destroy(other.gameObject);
         }
+        if (other.gameObject.tag =="point"){
+            point ++;
+            Destroy(other.gameObject);
+            print("point");
+        }
     }
+    
+
 }

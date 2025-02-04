@@ -6,6 +6,8 @@ TagManager:
   tags:
   - lava
   - cure
+  - enemy
+  - point
   layers:
   - Default
   - TransparentFX
