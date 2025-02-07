@@ -10,6 +10,7 @@ public class AgentControl : MonoBehaviour
     [Header("Detection")]
     [SerializeField] GameObject player;
     [SerializeField] float visionArea = 5;
+    [SerializeField] int lives = 4;
     float distance;
     bool follow = false;
     
@@ -20,7 +21,6 @@ public class AgentControl : MonoBehaviour
         agent.destination = path[goal].transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         distance = Vector3.Distance(transform.position, player.transform.position);
@@ -42,4 +42,13 @@ public class AgentControl : MonoBehaviour
         agent.destination = path[goal].transform.position;
      }   
     }
+
+    public void damage(){
+        lives --;
+        if (lives < 0){
+            Destroy(gameObject);
+        }
+    }
+
+
 }

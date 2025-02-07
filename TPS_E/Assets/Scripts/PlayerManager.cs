@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] float dps = 10;
     [SerializeField] float cure = 25;
     [SerializeField] float point = 0;
+    [SerializeField] GameObject finish;
 
 
 
@@ -45,10 +47,16 @@ public class PlayerManager : MonoBehaviour
             healthBar.value = health;
             Destroy(other.gameObject);
         }
-        if (other.gameObject.tag =="point"){
+        if (other.gameObject.tag =="point" && point < 14){
             point ++;
             Destroy(other.gameObject);
             print("point");
+            if (point == 14){
+                finish.SetActive(true);
+            }
+        }
+        if (other.gameObject.tag == "Finish"){
+            //Termina el juego
         }
     }
     

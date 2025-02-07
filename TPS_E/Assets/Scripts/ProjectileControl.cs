@@ -14,8 +14,12 @@ public class ProjectileControl : MonoBehaviour
         Invoke("clean",3);
     }
 
-    void OnCollisionEnter(Collision other){
-        Destroy(gameObject);
+    void OnTriggerEnter(Collider other){
+        if (other.gameObject.tag == "enemy"){
+            other.gameObject.GetComponent<AgentControl>().damage();
+            Destroy(gameObject);
+            print("HIT");
+        }
     }
 
     void clean(){
