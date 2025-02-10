@@ -1,5 +1,10 @@
+using TMPro;
+using Unity.VisualScripting;
+using System;
+using UnityEngine.SceneManagement;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
@@ -10,18 +15,23 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] float cure = 25;
     [SerializeField] float point = 0;
     [SerializeField] GameObject finish;
+    [SerializeField] TMP_Text Gasolina, primero;
 
 
 
     void Start()
     {
         healthBar.value = health;
+        
+        Gasolina.text = "Gasolina " + point + "/14";
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        if (primero){
+            Invoke("Desaparecer", 3);
+        }
     }
 
     void OnTriggerStay(Collider other){
@@ -33,11 +43,9 @@ public class PlayerManager : MonoBehaviour
             health = health - dps * Time.deltaTime;
             healthBar.value = health;
         }
-
         if (health <= 0){
-            //Muerto morio
+            other.gameObject.GetComponent<animControl>().Dead();
         }
-
     }
 
     void OnTriggerEnter(Collider other){
@@ -49,15 +57,18 @@ public class PlayerManager : MonoBehaviour
         }
         if (other.gameObject.tag =="point" && point < 14){
             point ++;
+            Gasolina.text = "Gasolina " + point + "/14";
             Destroy(other.gameObject);
-            print("point");
             if (point == 14){
                 finish.SetActive(true);
             }
         }
         if (other.gameObject.tag == "Finish"){
-            //Termina el juego
+            SceneManager.LoadScene("Creditos");
         }
+    }
+    void Desaparecer(){
+        primero.gameObject.SetActive(false);
     }
     
 

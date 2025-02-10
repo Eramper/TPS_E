@@ -18,7 +18,7 @@ public class ProjectileControl : MonoBehaviour
         if (other.gameObject.tag == "enemy"){
             other.gameObject.GetComponent<AgentControl>().damage();
             Destroy(gameObject);
-            print("HIT");
+            
         }
     }
 

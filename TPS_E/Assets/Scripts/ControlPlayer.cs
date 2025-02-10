@@ -1,25 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class ControlPlayer : MonoBehaviour
 {
     [Header("Movimiento")]
     public float moveSpeed = 7;
-
     public float groundDrag = 4;
 
     public float jumpForce = 12;
     public float jumpCooldown = 0.25f;
     public float airMultiplier = 0.4f;
     bool readyToJump;
+    public GameObject mapa;
 
     // [HideInInspector] public float walkSpeed = 7;
     // [HideInInspector] public float sprintSpeed = 10;
 
     [Header("Teclas")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode Mapa = KeyCode.M;
+    public KeyCode Salir = KeyCode.Escape;
+    public KeyCode Correr = KeyCode.LeftShift;
 
     [Header("Comprobar suelo")]
     public float playerHeight = 2;
@@ -39,7 +44,6 @@ public class ControlPlayer : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
         readyToJump = true;
     }
 
@@ -76,6 +80,21 @@ public class ControlPlayer : MonoBehaviour
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+        if(Input.GetKeyDown(Mapa)){
+            mapa.SetActive(true);
+        }
+        if(Input.GetKeyUp(Mapa)){
+            mapa.SetActive(false);
+        }
+        if(Input.GetKeyDown(Salir)){
+            SceneManager.LoadScene("Inicio");
+        }
+        if(Input.GetKeyDown(Correr)){
+            moveSpeed = 12;
+        }
+        if(Input.GetKeyUp(Correr)){
+            moveSpeed = 7;
         }
     }
 

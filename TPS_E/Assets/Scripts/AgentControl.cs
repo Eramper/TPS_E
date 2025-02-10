@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,9 @@ public class AgentControl : MonoBehaviour
     [SerializeField] int lives = 4;
     float distance;
     bool follow = false;
+    bool Dead = false;
+    public AudioSource quejido;
+    public AudioSource Muerte;
     
     
     void Start()
@@ -24,7 +28,7 @@ public class AgentControl : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance <= visionArea){
+        if (distance <= visionArea && !Dead){
             agent.destination = player.transform.position;
             follow = true;
             anim.SetBool("follow", true);
@@ -34,7 +38,7 @@ public class AgentControl : MonoBehaviour
             anim.SetBool("follow", false);
         }
 
-     if (agent.remainingDistance < 1 && !follow){
+     if (agent.remainingDistance < 1 && !follow && !Dead){
         goal++;
         if (goal == path.Length){
             goal = 0;
@@ -45,9 +49,17 @@ public class AgentControl : MonoBehaviour
 
     public void damage(){
         lives --;
+        quejido.Play();
         if (lives < 0){
-            Destroy(gameObject);
+            Dead = true;
+            anim.SetBool("Dead", true);
+            Invoke("Destruir", 3);
+            Muerte.Play();
         }
+    }
+
+    void Destruir(){
+        Destroy(gameObject);
     }
 
 
