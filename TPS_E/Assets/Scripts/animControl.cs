@@ -47,9 +47,6 @@ public class animControl : MonoBehaviour
         }
     }
     public void Dead(){
-        //AÑADIR SONIDO DE MUERTE AL JUGADOR
-        //AÑADIR TEXTOS, HAS GANADO, COSIGUE LA GASOLINA, VUELVE AL HELICOPTERO, HAS MUERTO
-        //AÑADIR ANIM ATAQUE ENEMIGOS
         //PENSAR MECANICA EXTRA (posible munición)
         //AÑADIR MUERTE AL JUGADOR
         anim.SetBool("Dead", true);

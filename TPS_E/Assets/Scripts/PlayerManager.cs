@@ -15,7 +15,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] float cure = 25;
     [SerializeField] float point = 0;
     [SerializeField] GameObject finish;
-    [SerializeField] TMP_Text Gasolina, primero;
+    [SerializeField] TMP_Text Gasolina, primero, ganar, perder;
+    [SerializeField] AudioSource mori;
 
 
 
@@ -44,7 +45,9 @@ public class PlayerManager : MonoBehaviour
             healthBar.value = health;
         }
         if (health <= 0){
-            other.gameObject.GetComponent<animControl>().Dead();
+            mori.Play();
+            perder.gameObject.SetActive(true);
+            Invoke("Desaparecer3", 3);
         }
     }
 
@@ -59,8 +62,10 @@ public class PlayerManager : MonoBehaviour
             point ++;
             Gasolina.text = "Gasolina " + point + "/14";
             Destroy(other.gameObject);
-            if (point == 14){
+            if (point >= 14){
                 finish.SetActive(true);
+                ganar.gameObject.SetActive(true);
+                Invoke("Desaparecer2", 3);
             }
         }
         if (other.gameObject.tag == "Finish"){
@@ -69,6 +74,14 @@ public class PlayerManager : MonoBehaviour
     }
     void Desaparecer(){
         primero.gameObject.SetActive(false);
+
+    }
+    void Desaparecer2(){
+        ganar.gameObject.SetActive(false);
+    }
+    void Desaparecer3(){
+        perder.gameObject.SetActive(false);
+        SceneManager.LoadScene("Inicio");
     }
     
 

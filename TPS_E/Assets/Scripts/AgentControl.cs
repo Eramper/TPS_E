@@ -12,6 +12,7 @@ public class AgentControl : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float visionArea = 5;
     [SerializeField] int lives = 4;
+    [SerializeField] float hitArea = 1;
     float distance;
     bool follow = false;
     bool Dead = false;
@@ -36,6 +37,9 @@ public class AgentControl : MonoBehaviour
             agent.destination = path[goal].transform.position;
             follow = false;
             anim.SetBool("follow", false);
+        }
+        if (distance <= hitArea && !Dead){
+            anim.SetTrigger("hit");
         }
 
      if (agent.remainingDistance < 1 && !follow && !Dead){
