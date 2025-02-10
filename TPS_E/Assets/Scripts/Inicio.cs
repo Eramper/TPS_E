@@ -9,6 +9,8 @@ public class Inicio : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Nivel");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Se pone nombre (lo amarillo, lo usaremos para enlazarlo) por cada boton que haya para enlazarlos en unity

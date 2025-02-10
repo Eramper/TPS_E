@@ -1,38 +1,41 @@
 using TMPro;
-using Unity.VisualScripting;
-using System;
 using UnityEngine.SceneManagement;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] Slider healthBar;
-    float health = 100;
+    public static float health = 100;
+    public static float amo = 100;
+    public float bullets = 100;
     [SerializeField] float dps = 10;
     [SerializeField] float cure = 25;
     [SerializeField] float point = 0;
     [SerializeField] GameObject finish;
-    [SerializeField] TMP_Text Gasolina, primero, ganar, perder;
+    [SerializeField] TMP_Text Gasolina, primero, ganar, perder, municion;
     [SerializeField] AudioSource mori;
 
 
 
     void Start()
     {
+        amo = bullets;
         healthBar.value = health;
         
         Gasolina.text = "Gasolina " + point + "/14";
+        municion.text = "Munición " + amo;
     }
 
     // Update is called once per frame
     public void Update()
     {
+        bullets = amo;
         if (primero){
             Invoke("Desaparecer", 3);
         }
+        municion.text = "Munición " + amo;
     }
 
     void OnTriggerStay(Collider other){
@@ -56,6 +59,11 @@ public class PlayerManager : MonoBehaviour
             health += cure;
             if (health > 100){ health = 100; }
             healthBar.value = health;
+            Destroy(other.gameObject);
+        }
+        if (other.gameObject.tag=="amo" && amo < 100){
+            amo += cure;
+            if (amo > 100){ amo = 100; }
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag =="point" && point < 14){

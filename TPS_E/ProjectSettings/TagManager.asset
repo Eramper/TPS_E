@@ -8,6 +8,7 @@ TagManager:
   - cure
   - enemy
   - point
+  - amo
   layers:
   - Default
   - TransparentFX

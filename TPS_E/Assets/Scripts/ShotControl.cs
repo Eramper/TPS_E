@@ -9,9 +9,10 @@ public class ShotControl : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && (Time.time - lastShoot > shootCooldown)){
+        if (Input.GetMouseButtonDown(0) && (Time.time - lastShoot > shootCooldown) && PlayerManager.amo > 0){
             lastShoot = Time.time;
             Instantiate(projectile, transform.position, transform.rotation);
+            PlayerManager.amo --;
         }
     }
 }

@@ -1,7 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 public class animControl : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class animControl : MonoBehaviour
     float lastJump = 0;
     [SerializeField] float shootCooldown = 1;
     float lastShoot = 0;
-    public AudioSource disparo;
+    public AudioSource disparo, noamo;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -19,6 +16,9 @@ public class animControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.health <= 0){
+            anim.SetBool("Dead", true);
+        }
         float movementX = Input.GetAxis("Horizontal");
         float movementZ = Input.GetAxis("Vertical");
         if (movementX != 0 || movementZ != 0){
@@ -37,18 +37,15 @@ public class animControl : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift)){
             anim.SetBool("Run", false);
         }
-        if (Input.GetMouseButtonDown(0) && (Time.time - lastShoot > shootCooldown)){
+        if (Input.GetMouseButtonDown(0) && (Time.time - lastShoot > shootCooldown) && PlayerManager.amo > 0){
             lastShoot = Time.time;
             anim.SetBool("Shoot", true);
             disparo.Play();
+        } else if (Input.GetMouseButtonDown(0) && (Time.time - lastShoot > shootCooldown) && PlayerManager.amo <= 0){
+            noamo.Play();
         }
         if (Input.GetMouseButtonUp(0)){
             anim.SetBool("Shoot", false);
         }
-    }
-    public void Dead(){
-        //PENSAR MECANICA EXTRA (posible munición)
-        //AÑADIR MUERTE AL JUGADOR
-        anim.SetBool("Dead", true);
     }
 }
