@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using Unity.Multiplayer.Center.Common.Analytics;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] GameObject finish;
     [SerializeField] TMP_Text Gasolina, primero, ganar, perder, municion;
     [SerializeField] AudioSource mori;
+    int dialogo = 1;
 
 
 
     void Start()
     {
+        health = 100;
         amo = bullets;
         healthBar.value = health;
         
@@ -79,6 +82,7 @@ public class PlayerManager : MonoBehaviour
         if (other.gameObject.tag == "Finish"){
             SceneManager.LoadScene("Creditos");
         }
+
     }
     void Desaparecer(){
         primero.gameObject.SetActive(false);
